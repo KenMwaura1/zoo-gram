@@ -79,3 +79,20 @@ class UserPost(models.Model):
     def __str__(self):
         return f'{self.user.username} Post'
 
+
+class Comment(models.Model):
+    """
+    model for the user comments in relation to User and Posts
+    """
+    comment = models.TextField()
+    post = models.ForeignKey(UserPost, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='comments')
+    created = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        ordering = ["-pk"]
+
+    def __str__(self):
+        return f'{self.user.username} Post'
+
+
