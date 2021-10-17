@@ -44,3 +44,15 @@ class UserPostForm(forms.ModelForm):
         fields = ('image', 'caption')
 
 
+class CommentForm(forms.ModelForm):
+    """
+    form to comment on posts
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['comment'].widget = forms.TextInput()
+        self.fields['comment'].widget.attrs['placeholder'] = 'Add a comment...'
+
+    class Meta:
+        model = UserComment
+        fields = ('comment',)
