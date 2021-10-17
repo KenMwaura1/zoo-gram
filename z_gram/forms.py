@@ -17,13 +17,30 @@ class RegisterForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2')
 
     class UpdateUserProfileForm(forms.ModelForm):
+        """
+        class for updating user profile
+        """
         class Meta:
             model = UserProfile
             fields = ['username', 'location', 'profile_picture', 'bio']
 
     class UpdateUserForm(forms.ModelForm):
-        email = forms.EmailField(max_length=120, help_text='Required. enter a valid email address.')
+        """
+        form for updating a user details
+        """
+        email = forms.EmailField(max_length=120, help_text='Required. Enter a valid email address.')
 
         class Meta:
             model = User
             fields = ('username', 'email')
+
+
+class UserPostForm(forms.ModelForm):
+    """
+    form for creating new posts
+    """
+    class Meta:
+        model = UserPost
+        fields = ('image', 'caption')
+
+
