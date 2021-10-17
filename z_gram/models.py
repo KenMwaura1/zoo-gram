@@ -1,4 +1,3 @@
-import blank as blank
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -15,14 +14,14 @@ class UserProfile(models.Model):
     profile_picture = models.ImageField(upload_to='images/profile/', default='user.png')
     location = models.CharField(max_length=70, blank=True, null=True)
 
-    @classmethod
+    @staticmethod
     @receiver(post_save, sender=User)
-    def create_user_profile(cls, sender, instance, created, **kwargs):
+    def create_user_profile(sender, instance, created, **kwargs):
         """
         receives signal once user model is saved, if user was created we create a UserProfile instance
         """
         if created:
-            cls.objects.create(user=instance)
+            UserProfile.objects.create(user=instance)
 
     @staticmethod
     @receiver(post_save, sender=User)
