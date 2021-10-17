@@ -80,7 +80,7 @@ class UserPost(models.Model):
         return f'{self.user.username} Post'
 
 
-class Comment(models.Model):
+class UserComment(models.Model):
     """
     model for the user comments in relation to User and Posts
     """
