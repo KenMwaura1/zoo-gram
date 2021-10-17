@@ -55,7 +55,7 @@ def home(request):
 
 
 @login_required(login_url='login')
-def profile(request):
+def profile(request, username):
     """
     route to own user profile
     """
@@ -90,15 +90,17 @@ def user_profile(request, username):
     user_posts = user_profile.userprofile.userposts.all()
     followers = Follow.objects.filter(followed=user_profile.userprofile)
     follow_status = None
+    print(request.user, 'User')
     for follower in followers:
-        follow_status = request.user.userprofile == follower.follower
+        follow_status = request.user == follower.follower
+
     params = {
-        'user_prof': user_profile,
+        'user_profile': user_profile,
         'user_posts': user_posts,
         'followers': followers,
         'follow_status': follow_status
     }
-    # print(followers)
+    print(followers)
     return render(request, 'z-gram/user_profile.html', params)
 
 
