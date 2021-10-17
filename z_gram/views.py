@@ -5,7 +5,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from z_gram.forms import RegisterForm, UserPostForm, UpdateUserForm, UpdateUserProfileForm
+from django.views.generic import RedirectView
+
+from z_gram.forms import RegisterForm, UserPostForm, UpdateUserForm, UpdateUserProfileForm, CommentForm
 from z_gram.models import UserPost, Follow
 
 """def home(request):
@@ -29,6 +31,9 @@ def register(request):
 
 @login_required(login_url='login')
 def home(request):
+    """
+    main view that handles rendering home page
+    """
     all_images = UserPost.objects.all()
     all_users = User.objects.exclude(id=request.user.id)
     if request.method == 'POST':
@@ -49,7 +54,10 @@ def home(request):
 
 
 @login_required(login_url='login')
-def profile(request, username):
+def profile(request):
+    """
+    route to own user profile
+    """
     images = request.user.userprofile.userposts.all()
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
@@ -72,6 +80,9 @@ def profile(request, username):
 
 @login_required(login_url='login')
 def user_profile(request, username):
+    """
+    route to return another users profile
+    """
     user_profile = get_object_or_404(User, username=username)
     if request.user == user_profile:
         return redirect('profile', username=request.user.username)
@@ -86,5 +97,44 @@ def user_profile(request, username):
         'followers': followers,
         'follow_status': follow_status
     }
-    print(followers)
+    # print(followers)
     return render(request, 'z-gram/user_profile.html', params)
+
+
+@login_required(login_url='login')
+def post_comment(request, id):
+    """
+    route to create new comments
+    """
+    image = get_object_or_404(UserPost, pk=id)
+    is_liked = bool(image.likes.filter(id=request.user.id).exists())
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            save_comment = form.save(commit=False)
+            save_comment.post = image
+            save_comment.user = request.user.userprofile
+            save_comment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = CommentForm()
+    params = {
+        'image': image,
+        'form': form,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    return render(request, 'z-gram/single_post.html', params)
+
+
+class LikePost(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        id = self.kwargs.get('id')
+        object = get_object_or_404(UserPost, pk=id)
+        url = object.get_absolute_url()
+        user = self.request.user
+        if user in object.likes.all():
+            object.likes.remove(user)
+        else:
+            object.likes.add(user)
+        return url
