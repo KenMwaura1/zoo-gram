@@ -174,3 +174,20 @@ def unfollow(request, to_unfollow):
         unfollow = Follow.objects.filter(follower=request.user.userprofile, followed=user_profile)
         unfollow.delete()
         return redirect('user_profile', user_profile.user.username)
+
+
+@login_required(login_url='login')
+def search_profile(request):
+    if 'search_user' in request.GET and request.GET['search_user']:
+        name = request.GET.get("search_user")
+        results = UserProfile.search_profile(name)
+        print(results)
+        message = f'{name}'
+        params = {
+            'results': results,
+            'message': message
+        }
+        return render(request, 'z-gram/results.html', params)
+    else:
+        message = "You haven't searched for any image category"
+    return render(request, 'z-gram/results.html', {'message': message})
