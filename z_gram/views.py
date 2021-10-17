@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from django.views.generic import RedirectView
 
 from z_gram.forms import RegisterForm, UserPostForm, UpdateUserForm, UpdateUserProfileForm, CommentForm
-from z_gram.models import UserPost, Follow
+from z_gram.models import UserPost, Follow, UserProfile
 
 """def home(request):
     return render(request, 'z-gram/home.html')"""
@@ -158,3 +158,19 @@ def like_post(request):
     if request.is_ajax():
         html = render_to_string('z-gram/like_page.html', params, request=request)
         return JsonResponse({'form': html})
+
+
+def follow(request, to_follow):
+    if request.method == 'GET':
+        user_profile = UserProfile.objects.get(pk=to_follow)
+        follow = Follow(follower=request.user.userprofile, followed=user_profile)
+        follow.save()
+        return redirect('user_profile', user_profile.user.username)
+
+
+def unfollow(request, to_unfollow):
+    if request.method == 'GET':
+        user_profile = UserProfile.objects.get(pk=to_unfollow)
+        unfollow = Follow.objects.filter(follower=request.user.userprofile, followed=user_profile)
+        unfollow.delete()
+        return redirect('user_profile', user_profile.user.username)
