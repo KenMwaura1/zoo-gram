@@ -26,7 +26,8 @@ class UserProfile(models.Model):
     @staticmethod
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        instance.userprofile.save()
+        # instance.save()
+        pass
 
     def save_profile(self):
         self.save()

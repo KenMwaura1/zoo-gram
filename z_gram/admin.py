@@ -1,11 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
-from django.contrib.auth.models import User
+from .models import UserComment, Follow, UserPost, UserProfile
 
-from z_gram.models import UserComment, Follow, UserPost, UserProfile
-
-admin.register(UserComment)
-admin.register(Follow)
-admin.register(UserPost)
-admin.register(UserProfile)
+admin.site.register(UserComment)
+admin.site.register(Follow)
+admin.site.register(UserPost)
+admin.site.register(UserProfile)
