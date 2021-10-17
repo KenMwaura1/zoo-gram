@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
+from django.template.loader import render_to_string
 from django.views.generic import RedirectView
 
 from z_gram.forms import RegisterForm, UserPostForm, UpdateUserForm, UpdateUserProfileForm, CommentForm
@@ -138,3 +139,22 @@ class LikePost(RedirectView):
         else:
             object.likes.add(user)
         return url
+
+
+def like_post(request):
+    # image = get_object_or_404(Post, id=request.POST.get('image_id'))
+    image = get_object_or_404(UserPost, id=request.POST.get('id'))
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        image.likes.remove(request.user)
+    else:
+        image.likes.add(request.user)
+    is_liked = False
+    params = {
+        'image': image,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    if request.is_ajax():
+        html = render_to_string('z-gram/like_page.html', params, request=request)
+        return JsonResponse({'form': html})
