@@ -24,7 +24,7 @@
             <ul class="navbar-nav nav-flex-icons">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item" >
-                    <a class="nav-link" href="{% url 'profile' user.username %}">
+                    <a class="nav-link yellow-text" href="{% url 'profile' user.username %}">
                         <i class="fab fa-instagram title blue-grey-text"></i> {{ user.username|title }}
                     </a>
                 </li>

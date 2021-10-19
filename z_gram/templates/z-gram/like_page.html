@@ -3,7 +3,7 @@
     {% csrf_token %}
     {% if is_liked %}
         <button class="btn btn-sm" type="submit" id="like" name="image_id" value="{{image.id}}"><i
-                class="fa fa-heart hearticon mx-auto" aria-hidden="true" style="color:red"></i></a>
+                class="fa fa-heart hearticon mx-auto reddit" aria-hidden="true" style="color:red"></i></a>
         </button>
     {% else %}
         <button class="btn btn-sm" type="submit" id="like"  name="image_id" value="{{image.id}}"><i

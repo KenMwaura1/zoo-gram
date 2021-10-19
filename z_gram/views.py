@@ -3,10 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-
-# Create your views here.
 from django.template.loader import render_to_string
 from django.views.generic import RedirectView
+from cloudinary.forms import cl_init_js_callbacks
 
 from z_gram.forms import RegisterForm, UserPostForm, UpdateUserForm, UpdateUserProfileForm, CommentForm
 from z_gram.models import UserPost, Follow, UserProfile
