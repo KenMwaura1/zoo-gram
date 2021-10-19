@@ -26,11 +26,11 @@ class UserProfile(models.Model):
     @staticmethod
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        # instance.save()
-        pass
+        instance.userprofile.save()
 
     def save_profile(self):
-        self.save()
+        # self.save()
+        pass
 
     def delete_profile(self):
         self.delete()
@@ -68,7 +68,8 @@ class UserPost(models.Model):
         return self.comments.all()
 
     def save_image(self):
-        self.save()
+        # self.save()
+        pass
 
     def delete_image(self):
         self.delete()
