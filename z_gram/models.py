@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name="userprofile", on_delete=models.CASCADE)
     username = models.TextField(max_length=150)
     bio = models.CharField(max_length=400, blank=True, null=True, default="simple bio")
-    profile_picture = models.ImageField(upload_to='images/profile/', default='user.png')
+    profile_picture = models.ImageField(upload_to='images/profile/', default='images/profile/user.png')
     location = models.CharField(max_length=70, blank=True, null=True)
 
     @staticmethod
