@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar white purple-gradient" style="margin-bottom: 5%">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar white ripe-malinka-gradient" style="margin-bottom: 5%">
     <div class="container">
         <a class="navbar-brand font-weight-bold white-text" href="{% url 'home' %}">Zoo Gram</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
@@ -24,7 +24,7 @@
             <ul class="navbar-nav nav-flex-icons">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item" >
-                    <a class="nav-link yellow-text" href="{% url 'profile' user.username %}">
+                    <a class="nav-link yellow-text h4" href="{% url 'profile' user.username %}">
                         <i class="fab fa-instagram title blue-grey-text"></i> {{ user.username|title }}
                     </a>
                 </li>
