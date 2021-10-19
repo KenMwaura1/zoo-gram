@@ -62,7 +62,7 @@ def profile(request, username):
     images = request.user.userprofile.userposts.all()
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        profile_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -90,9 +90,8 @@ def user_profile(request, username):
     user_posts = user_profile.userprofile.userposts.all()
     followers = Follow.objects.filter(followed=user_profile.userprofile)
     follow_status = None
-    print(request.user, 'User')
     for follower in followers:
-        follow_status = request.user == follower.follower
+        follow_status = request.user.username == follower.follower.username
 
     params = {
         'user_profile': user_profile,
@@ -100,7 +99,6 @@ def user_profile(request, username):
         'followers': followers,
         'follow_status': follow_status
     }
-    print(followers)
     return render(request, 'z-gram/user_profile.html', params)
 
 
@@ -187,9 +185,11 @@ def search_profile(request):
         message = f'{name}'
         params = {
             'results': results,
-            'message': message
+            'message': message,
+            'name': name,
+
         }
         return render(request, 'z-gram/results.html', params)
     else:
-        message = "You haven't searched for any image category"
+        message = "You haven't searched for any user"
     return render(request, 'z-gram/results.html', {'message': message})
