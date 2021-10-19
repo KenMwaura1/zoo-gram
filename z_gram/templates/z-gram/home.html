@@ -50,14 +50,12 @@
                             </a>
                         </div>
                         <div class="iconic ml-2">
-                            <button class="btn btn-sm" type="submit" name="image_id" value="{{image.id}}">
-                                <a href="{% url 'comment' image.id %}">
-                                    <i class="far fa-heart hearticon mx-auto cyan-text" aria-hidden="true" style=""></i>
-                                </a>
-                            </button>
-                            <button class="btn btn-sm" type="submit"><a href="{% url 'comment' image.id %}"><i
-                                    class="far fa-comment hearticon mx-auto indigo-text" aria-hidden="true"></i>
-                            </a></button>
+                            <a href="{% url 'comment' image.id %}" class="btn btn-sm" >
+                                <i class="far fa-heart hearticon mx-auto red-text" aria-hidden="true" style=""></i>
+                            </a>
+                            <a href="{% url 'comment' image.id %}" class="btn btn-sm">
+                                <i class="far fa-comment hearticon mx-auto indigo-text" aria-hidden="true"></i>
+                            </a>
                         </div>
                         <span class="ml-4 mb-1"><strong>{{image.likes.count}} like{{image.likes.count|pluralize}}</strong></span>
                         <span class="text-secondary ml-4 view-all"><a href="{% url 'comment' image.id %}">view all {{image.comments.count}} comment{{image.comments.count|pluralize}}</a></span>
