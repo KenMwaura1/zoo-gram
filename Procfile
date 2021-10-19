@@ -1,1 +1,1 @@
-web: gunicorn z-gram.wsgi
+web: gunicorn zoo_gram.wsgi
