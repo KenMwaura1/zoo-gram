@@ -1,5 +1,7 @@
 # zoo-gram
-a Django clone of the website for the popular photo app Instagram
+a Django clone of the website for the popular photo app Instagram.
+
+![](static/images/Zoo-Gram.gif)
 
 ## User stories
 As a user of the application I should be able to:
