@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar white purple-gradient">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar white purple-gradient" style="margin-bottom: 5%">
     <div class="container">
         <a class="navbar-brand font-weight-bold white-text" href="{% url 'home' %}">Zoo Gram</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
@@ -22,6 +22,7 @@
             </ul>
             <!-- Social Icon  -->
             <ul class="navbar-nav nav-flex-icons">
+                {% if request.user.is_authenticated %}
                 <li class="nav-item" >
                     <a class="nav-link" href="{% url 'profile' user.username %}">
                         <i class="fab fa-instagram title blue-grey-text"></i> {{ user.username|title }}
@@ -33,6 +34,12 @@
                         <button class="btn pink-gradient btn-rounded btn-sm font-weight-bold" type="submit" data-offset="90">Search</button>
                     </form>
                 </li>
+                {% else %}
+                <li class="nav-item ml-3">
+                    <a class="btn pink-gradient btn-rounded btn-sm font-weight-bold" href="/accounts/login/" data-offset="90">Login</a>
+                    <a class="btn peach-gradient btn-rounded btn-sm font-weight-bold" href="/accounts/register/" data-offset="90">Sign Up</a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link">
                         <i class="fab fa-facebook-f title"></i>
@@ -47,5 +54,6 @@
         </div>
     </div>
 </nav>
+
 
 

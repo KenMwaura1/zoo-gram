@@ -91,7 +91,7 @@ def user_profile(request, username):
     followers = Follow.objects.filter(followed=user_profile.userprofile)
     follow_status = None
     for follower in followers:
-        follow_status = request.user.username == follower.follower.username
+        follow_status = request.user.username == str(follower.follower.user)
 
     params = {
         'user_profile': user_profile,
@@ -178,10 +178,11 @@ def unfollow(request, to_unfollow):
 
 @login_required(login_url='login')
 def search_profile(request):
-    if 'search_user' in request.GET and request.GET['search_user']:
+    if request.GET['search_user'] and 'search_user' in request.GET:
         name = request.GET.get("search_user")
         results = UserProfile.search_profile(name)
-        print(results)
+        for r in results:
+            print(r.user)
         message = f'{name}'
         params = {
             'results': results,
