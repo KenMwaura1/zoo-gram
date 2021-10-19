@@ -32,3 +32,10 @@ header,
         min-height: 550px;
     }
 }
+
+.user-details{
+    margin-left:-30px;
+}
+.userinfo{
+    margin-top:24px;
+}
