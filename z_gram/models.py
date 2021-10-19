@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from cloudinary.models import CloudinaryField
 
 
 class UserProfile(models.Model):
@@ -11,7 +12,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name="userprofile", on_delete=models.CASCADE)
     username = models.TextField(max_length=150)
     bio = models.CharField(max_length=400, blank=True, null=True, default="simple bio")
-    profile_picture = models.ImageField(upload_to='images/profile/', default='images/profile/user.png')
+    # profile_picture = models.ImageField(upload_to='images/profile/', default='images/profile/user.png')
+    profile_picture = CloudinaryField('image', default="https://res.cloudinary.com/dd5ab8mp3/image/upload/v1634659738"
+                                                       "/images/profile/user.jpg") 
     location = models.CharField(max_length=70, blank=True, null=True)
 
     @staticmethod
@@ -51,7 +54,8 @@ class UserPost(models.Model):
     model for post by User
     """
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='userposts')
-    image = models.ImageField(upload_to='images/posts/')
+    # image = models.ImageField(upload_to='images/posts/')
+    image = CloudinaryField('image')
     caption = models.CharField(max_length=250, blank=True)
     likes = models.ManyToManyField(User, related_name='likes', blank=True, )
     name = models.CharField(max_length=250, blank=True)
