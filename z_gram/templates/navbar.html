@@ -14,13 +14,25 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link white-text" href="#locations">Locations
+                    <a class="nav-link white-text" href="#posts">Posts
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
+
             </ul>
             <!-- Social Icon  -->
             <ul class="navbar-nav nav-flex-icons">
+                <li class="nav-item" >
+                    <a class="nav-link" href="{% url 'profile' user.username %}">
+                        <i class="fab fa-instagram title blue-grey-text"></i> {{ user.username|title }}
+                    </a>
+                </li>
+                <li class="nav-item ml-3">
+                    <form class="form-inline my-2 my-md-0"  action="{% url 'search' %}" role="search">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search for user profiles" name="search_user" aria-label="Search">
+                        <button class="btn pink-gradient btn-rounded btn-sm font-weight-bold" type="submit" data-offset="90">Search</button>
+                    </form>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link">
                         <i class="fab fa-facebook-f title"></i>
@@ -31,22 +43,9 @@
                         <i class="fab fa-twitter title"></i>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="fab fa-instagram title"></i>
-                    </a>
-                </li>
-                <li class="nav-item ml-3">
-                    <form class="form-inline my-2 my-md-0"  action="/search/" role="search">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search for image in Category" name="search" aria-label="Search">
-                        <button class="btn pink-gradient btn-rounded btn-sm font-weight-bold" type="submit" data-offset="90">Search</button>
-                    </form>
-
-                </li>
             </ul>
         </div>
     </div>
 </nav>
-<br/>
-<br/>
+
 
